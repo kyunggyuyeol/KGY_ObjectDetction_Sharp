@@ -14,6 +14,7 @@ using TensorFlow;
 using System.Net;
 using ICSharpCode.SharpZipLib.Tar;
 using ICSharpCode.SharpZipLib.GZip;
+using System.Diagnostics;
 
 namespace objectdectTest
 {
@@ -39,6 +40,9 @@ namespace objectdectTest
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
             _input = Path.Combine(_currentDir, "test_images/input.jpg");
             _output = Path.Combine(_currentDir, "test_images/output.jpg");
             _catalogPath = Path.Combine(_currentDir, @"data/mscoco_label_map.pbtxt");
@@ -84,6 +88,8 @@ namespace objectdectTest
                 }
             }
 
+            watch.Stop();
+            var data = watch.Elapsed;
         }
 
         private void DrawBoxes(float[,,] boxes, float[,] scores, float[,] classes, string inputFile, string outputFile, double minScore)
